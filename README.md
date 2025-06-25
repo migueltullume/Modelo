@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
-# Parámetros del modelo (personalizables)
+### Parámetros del modelo (personalizables)
 alpha = 1.2    # Exponente de apego preferencial
 f0 = 0.1       # Atención mínima
 N = 1.0        # Escala
@@ -33,15 +33,15 @@ r = 0.15       # Factor de acoplamiento
 k_max = 50     # Máxima atención considerada
 t_span = [0, 10] # Rango temporal
 
-# Función de decaimiento biexponencial S(t)
+### Función de decaimiento biexponencial S(t)
 def S(t):
     return (N/(p + r - q)) * ((p - q)*np.exp(-(p+r)*t) + r*np.exp(-q*t))
 
-# Función de apego preferencial f(k)
+### Función de apego preferencial f(k)
 def f(k, alpha=alpha, f0=f0):
     return (k**alpha) + f0
 
-# Ecuación maestra (sistema de EDOs)
+### Ecuación maestra (sistema de EDOs)
 def master_equation(t, n):
     dndt = np.zeros_like(n)
     lambda_vals = S(t) * f(np.arange(len(n)))
@@ -56,17 +56,17 @@ def master_equation(t, n):
             
     return dndt
 
-# Condición inicial (todos comienzan con k=0)
+### Condición inicial (todos comienzan con k=0)
 n0 = np.zeros(k_max+1)
 n0[0] = 1.0  # 100% de productos con k=0 en t=0
 
-# Resolver numéricamente
+### Resolver numéricamente
 solution = solve_ivp(master_equation, t_span, n0, t_eval=np.linspace(t_span[0], t_span[1], 100))
 
-# Visualización
+### Visualización
 plt.figure(figsize=(12, 8))
 
-# 1. Evolución de S(t)
+#### 1. Evolución de S(t)
 plt.subplot(2, 2, 1)
 t_vals = np.linspace(t_span[0], t_span[1], 100)
 plt.plot(t_vals, S(t_vals), 'r-', linewidth=2)
@@ -74,7 +74,7 @@ plt.title('Decaimiento Temporal $S(t)$')
 plt.xlabel('Tiempo (t)')
 plt.grid(alpha=0.3)
 
-# 2. Función de apego preferencial
+#### 2. Función de apego preferencial
 plt.subplot(2, 2, 2)
 k_vals = np.arange(0, k_max+1)
 plt.plot(k_vals, f(k_vals), 'b-', linewidth=2)
@@ -82,7 +82,7 @@ plt.title('Apego Preferencial $f(k) = k^{{{}}} + {}$'.format(alpha, f0))
 plt.xlabel('Atención Acumulada (k)')
 plt.grid(alpha=0.3)
 
-# 3. Distribución n(k,t) en tiempos seleccionados
+#### 3. Distribución n(k,t) en tiempos seleccionados
 plt.subplot(2, 1, 2)
 for t_idx in [0, 20, 40, 60, 80, 99]:
     t_val = solution.t[t_idx]
@@ -98,6 +98,6 @@ plt.yscale('log')
 plt.grid(alpha=0.3)
 plt.tight_layout()
 
-# Guardar resultados
+#### Guardar resultados
 plt.savefig('modelo_atencion_colectiva.png')
 plt.show()
