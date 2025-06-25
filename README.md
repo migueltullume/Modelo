@@ -24,14 +24,22 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
 ### Parámetros del modelo (personalizables)
-alpha = 1.2    # Exponente de apego preferencial
-f0 = 0.1       # Atención mínima
-N = 1.0        # Escala
-p = 0.4        # Memoria comunicativa (rápida)
-q = 0.01       # Memoria cultural (lenta)
-r = 0.15       # Factor de acoplamiento
-k_max = 50     # Máxima atención considerada
-t_span = [0, 10] # Rango temporal
+#### Exponente de apego preferencial
+alpha = 1.2 
+#### Atención mínima
+f0 = 0.1  
+#### Escala
+N = 1.0 
+#### Memoria comunicativa (rápida)
+p = 0.4 
+#### Memoria cultural (lenta)
+q = 0.01  
+#### Factor de acoplamiento
+r = 0.15 
+#### Máxima atención considerada
+k_max = 50  
+#### Rango temporal
+t_span = [0, 10] 
 
 ### Función de decaimiento biexponencial S(t)
 def S(t):
