@@ -2,7 +2,7 @@
 import numpy as np  
 import matplotlib.pyplot as plt 
 
-# Parámetros
+## Parámetros
 N = 1.0; p = 0.3; q = 0.1; r = 0.2  
 
 # Función biexponencial S(t)  
